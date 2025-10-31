@@ -1,0 +1,231 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Flippr (Alt1)</title>
+  <script src="https://runeapps.org/alt1lib.js"></script>
+  <link rel="stylesheet" href="style.css"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>💰 Flippr</h1>
+      <div id="a1status" class="pill">checking Alt1…</div>
+    </header>
+
+    <section class="grid grid-3">
+      <!-- Active Orders -->
+      <div class="card span-3">
+        <h2>Active Orders</h2>
+        <div class="tabs">
+          <button class="tab active" data-tab="stats">Statistics</button>
+          <button class="tab" data-tab="buy">Buy Orders</button>
+          <button class="tab" data-tab="sell">Sell Orders</button>
+          <button class="tab" data-tab="completed">Completed</button>
+          <button class="tab" data-tab="items">Item Tracking</button>
+          <button class="tab" data-tab="watchlist">Watchlist</button>
+          <button class="tab" data-tab="settings">Settings</button>
+        </div>
+        
+        <!-- Statistics Tab -->
+        <div id="tab-stats" class="tab-content active">
+          <div class="stats-grid" style="margin-bottom:20px;">
+            <div class="stat-item">
+              <div class="stat-label">Total Profit</div>
+              <div class="stat-value" id="totalProfit" data-profit="0">0 gp</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Total Flips</div>
+              <div class="stat-value" id="totalFlips">0</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Active Orders</div>
+              <div class="stat-value" id="activeOrders">0</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Total Invested</div>
+              <div class="stat-value" id="totalInvested">0 gp</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Avg Profit/Flip</div>
+              <div class="stat-value" id="avgProfit">0 gp</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Success Rate</div>
+              <div class="stat-value" id="successRate">0%</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Best Flip</div>
+              <div class="stat-value" id="bestFlip">0 gp</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">ROI %</div>
+              <div class="stat-value" id="roi">0%</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Items Tracked</div>
+              <div class="stat-value" id="itemsTracked">0</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Total Revenue</div>
+              <div class="stat-value" id="totalRevenue">0 gp</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Worst Flip</div>
+              <div class="stat-value" id="worstFlip">0 gp</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Profit Margin</div>
+              <div class="stat-value" id="profitMargin">0%</div>
+            </div>
+          </div>
+          
+          <h3 style="margin:20px 0 12px 0;">Top Items by Profit</h3>
+          <div id="topItemsList" class="orders-list" style="max-height:300px;"></div>
+          
+          <h3 style="margin:20px 0 12px 0;">Recent Activity</h3>
+          <div id="recentActivity" class="orders-list" style="max-height:200px;"></div>
+        </div>
+        
+        <!-- Buy Orders Tab -->
+        <div id="tab-buy" class="tab-content">
+          <div class="order-form">
+            <input type="text" id="buyItem" placeholder="Item name" class="item-input">
+            <input type="number" id="buyPrice" placeholder="Buy price" class="price-input" min="1">
+            <input type="number" id="buyQty" placeholder="Quantity" class="qty-input" min="1" value="1">
+            <button id="addBuyOrder" class="btn-primary">Add Buy Order</button>
+          </div>
+          <div id="buyOrdersList" class="orders-list"></div>
+        </div>
+
+        <!-- Sell Orders Tab -->
+        <div id="tab-sell" class="tab-content">
+          <div class="order-form">
+            <input type="text" id="sellItem" placeholder="Item name" class="item-input">
+            <input type="number" id="sellPrice" placeholder="Sell price" class="price-input" min="1">
+            <input type="number" id="sellQty" placeholder="Quantity" class="qty-input" min="1" value="1">
+            <button id="addSellOrder" class="btn-primary">Add Sell Order</button>
+          </div>
+          <div id="sellOrdersList" class="orders-list"></div>
+        </div>
+
+        <!-- Completed Tab -->
+        <div id="tab-completed" class="tab-content">
+          <div class="filters">
+            <button id="clearCompleted" class="btn-danger">Clear History</button>
+            <button id="exportCompleted">Export Data</button>
+          </div>
+          <div id="completedList" class="orders-list"></div>
+        </div>
+
+        <!-- Item Tracking Tab -->
+        <div id="tab-items" class="tab-content">
+          <div class="filters">
+            <label class="inline"><input type="checkbox" id="autoDetectGE" checked> Auto-detect GE price checks</label>
+            <button id="clearItems" class="btn-danger">Clear All Items</button>
+          </div>
+          <div class="order-form" style="margin-top:12px;">
+            <input type="text" id="manualItem" placeholder="Item name (manual entry)" class="item-input">
+            <input type="number" id="manualBuy" placeholder="Buy price" class="price-input" min="1">
+            <input type="number" id="manualSell" placeholder="Sell price" class="price-input" min="1">
+            <button id="addManualItem" class="btn-primary">Add Manually</button>
+          </div>
+          <div id="itemsList" class="orders-list"></div>
+        </div>
+
+        <!-- Watchlist Tab -->
+        <div id="tab-watchlist" class="tab-content">
+          <div class="order-form">
+            <input type="text" id="watchItem" placeholder="Item name" class="item-input">
+            <button id="addWatchItem" class="btn-primary">Add to Watchlist</button>
+          </div>
+          <div id="watchlistItems" class="orders-list"></div>
+        </div>
+
+        <!-- Settings Tab -->
+        <div id="tab-settings" class="tab-content">
+          <h3 style="margin-bottom:12px;">OCR Detection Settings</h3>
+          <div class="filters">
+            <label class="inline"><input type="checkbox" id="autoDetectGE" checked> Auto-detect GE price checks</label>
+            <label class="inline"><input type="checkbox" id="debugMode"> Debug Mode (show OCR text)</label>
+          </div>
+          
+          <h3 style="margin-top:20px; margin-bottom:12px;">Detection Regions</h3>
+          <small style="color:var(--mut); display:block; margin-bottom:12px;">Adjust these if auto-detection isn't working properly. Values are relative to RS window.</small>
+          
+          <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:12px; margin-bottom:16px;">
+            <div>
+              <label style="display:block; margin-bottom:4px; color:var(--mut); font-size:12px;">Region 1 X:</label>
+              <input type="number" id="region1X" class="price-input" style="width:100%;" value="400">
+            </div>
+            <div>
+              <label style="display:block; margin-bottom:4px; color:var(--mut); font-size:12px;">Region 1 Y:</label>
+              <input type="number" id="region1Y" class="price-input" style="width:100%;" value="150">
+            </div>
+            <div>
+              <label style="display:block; margin-bottom:4px; color:var(--mut); font-size:12px;">Region 1 Width:</label>
+              <input type="number" id="region1W" class="price-input" style="width:100%;" value="400">
+            </div>
+            <div>
+              <label style="display:block; margin-bottom:4px; color:var(--mut); font-size:12px;">Region 1 Height:</label>
+              <input type="number" id="region1H" class="price-input" style="width:100%;" value="300">
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:12px; margin-bottom:16px;">
+            <div>
+              <label style="display:block; margin-bottom:4px; color:var(--mut); font-size:12px;">Region 2 X:</label>
+              <input type="number" id="region2X" class="price-input" style="width:100%;" value="380">
+            </div>
+            <div>
+              <label style="display:block; margin-bottom:4px; color:var(--mut); font-size:12px;">Region 2 Y:</label>
+              <input type="number" id="region2Y" class="price-input" style="width:100%;" value="200">
+            </div>
+            <div>
+              <label style="display:block; margin-bottom:4px; color:var(--mut); font-size:12px;">Region 2 Width:</label>
+              <input type="number" id="region2W" class="price-input" style="width:100%;" value="420">
+            </div>
+            <div>
+              <label style="display:block; margin-bottom:4px; color:var(--mut); font-size:12px;">Region 2 Height:</label>
+              <input type="number" id="region2H" class="price-input" style="width:100%;" value="250">
+            </div>
+          </div>
+
+          <div class="btnrow">
+            <button id="testDetection" class="btn-primary">Test Detection (Current Screen)</button>
+            <button id="resetRegions" class="btn-danger">Reset to Default</button>
+            <button id="saveSettings">Save Settings</button>
+          </div>
+
+          <div id="debugOutput" style="margin-top:16px; padding:12px; background:#1e2338; border-radius:8px; display:none;">
+            <h4 style="margin:0 0 8px 0; font-size:13px;">OCR Debug Output:</h4>
+            <pre id="debugText" style="margin:0; font-size:11px; color:var(--mut); white-space:pre-wrap; max-height:200px; overflow-y:auto;"></pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="card span-3">
+        <h2>Quick Actions</h2>
+        <div class="btnrow">
+          <button id="markBuyComplete">Complete Buy Order</button>
+          <button id="markSellComplete">Complete Sell Order</button>
+          <button id="linkOrder">Link Buy → Sell</button>
+          <button id="exportData">Export All Data</button>
+          <button id="importData">Import Data</button>
+          <button id="resetAll" class="btn-danger">Reset Everything</button>
+        </div>
+        <small>Select an order from the lists above, then use the action buttons to manage it. Price checking items in GE will automatically track them and show profit per item.</small>
+      </div>
+    </section>
+
+      <footer>
+      <span>Flippr • v1.3.0</span>
+    </footer>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
+

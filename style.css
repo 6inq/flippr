@@ -1,0 +1,75 @@
+:root{ --bg:#0f1320; --card:#171b2b; --fg:#dbe1ff; --mut:#93a0d1; --accent:#7dd3fc; --accent2:#3bfba5; --danger:#ff6b6b; --warning:#ffd93d; }
+*{ box-sizing:border-box; font-family:Inter,Segoe UI,Arial,sans-serif; }
+body{ margin:0; background:var(--bg); color:var(--fg);}
+.wrap{ max-width:1200px; margin:20px auto; padding:16px;}
+header{ display:flex; align-items:center; gap:12px; }
+h1{ margin:0; font-size:20px;}
+.pill{ margin-left:auto; padding:6px 10px; border-radius:999px; background:#242a43; color:var(--mut); font-size:12px;}
+.grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-top:12px;}
+.grid.grid-3{ grid-template-columns:repeat(3,1fr); }
+.card{ background:var(--card); border:1px solid #222846; border-radius:12px; padding:14px; transition:all 0.3s ease;}
+.span-3{ grid-column:1/-1;}
+h2{ margin:0 0 10px 0; font-size:16px;}
+h3{ margin:0 0 6px 0; font-size:15px;}
+
+/* Tabs */
+.tabs{ display:flex; gap:8px; margin-bottom:16px; border-bottom:2px solid #222846;}
+.tab{ background:transparent; color:var(--mut); border:none; border-bottom:2px solid transparent; padding:8px 16px; cursor:pointer; transition:all 0.2s ease;}
+.tab:hover{ color:var(--fg);}
+.tab.active{ color:var(--accent); border-bottom-color:var(--accent);}
+.tab-content{ display:none;}
+.tab-content.active{ display:block;}
+
+/* Forms */
+.order-form{ display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap;}
+.item-input{ flex:2; min-width:200px; padding:8px 12px; border-radius:6px; border:1px solid #2f375b; background:#222846; color:var(--fg);}
+.price-input, .qty-input{ width:120px; padding:8px 12px; border-radius:6px; border:1px solid #2f375b; background:#222846; color:var(--fg);}
+.item-input:focus, .price-input:focus, .qty-input:focus{ outline:none; border-color:var(--accent);}
+
+/* Buttons */
+button{ background:#222846; color:var(--fg); border:1px solid #2f375b; border-radius:8px; padding:8px 10px; cursor:pointer; transition:all 0.2s ease; font-size:13px;}
+button:hover{ border-color:var(--accent); background:#2a3450;}
+button:active{ transform:scale(0.98);}
+.btn-primary{ background:var(--accent); border-color:var(--accent); color:#0f1320;}
+.btn-primary:hover{ background:#8de3ff; border-color:#8de3ff;}
+.btn-danger{ background:var(--danger); border-color:var(--danger); color:#fff;}
+.btn-danger:hover{ background:#ff8888; border-color:#ff8888;}
+.btnrow{ display:flex; gap:8px; margin-top:10px; flex-wrap:wrap;}
+.filters{ display:flex; gap:8px; margin-bottom:12px;}
+
+/* Orders List */
+.orders-list{ display:flex; flex-direction:column; gap:8px; max-height:400px; overflow-y:auto;}
+.order-item{ background:#1e2338; border:1px solid #2a3450; border-radius:8px; padding:12px; display:flex; align-items:center; gap:12px; transition:all 0.2s ease; cursor:pointer;}
+.order-item:hover{ border-color:var(--accent); background:#242a43;}
+.order-item.selected{ border-color:var(--accent2); background:#1a2333; box-shadow:0 0 0 2px var(--accent2) inset;}
+.order-item.completed{ opacity:0.6;}
+.order-info{ flex:1; display:flex; flex-direction:column; gap:4px;}
+.order-name{ font-weight:600; color:var(--fg);}
+.order-details{ font-size:12px; color:var(--mut); display:flex; gap:16px; flex-wrap:wrap;}
+.order-price{ font-size:14px; font-weight:500;}
+.order-price.profit{ color:var(--accent2);}
+.order-price.loss{ color:var(--danger);}
+.order-actions{ display:flex; gap:6px;}
+.order-btn{ padding:6px 10px; font-size:11px;}
+
+/* Stats Grid */
+.stats-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:12px;}
+.stat-item{ background:#1e2338; border:1px solid #2a3450; border-radius:8px; padding:12px; text-align:center;}
+.stat-label{ font-size:11px; color:var(--mut); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.5px;}
+.stat-value{ font-size:20px; font-weight:600; color:var(--accent);}
+.stat-value.profit{ color:var(--accent2);}
+.stat-value.loss{ color:var(--danger);}
+
+/* Empty state */
+.empty-state{ text-align:center; padding:40px 20px; color:var(--mut);}
+.empty-state::before{ content:"📦"; font-size:48px; display:block; margin-bottom:12px; opacity:0.5;}
+
+footer{ margin-top:14px; color:var(--mut); font-size:12px; text-align:center;}
+small{ display:block; margin-top:8px; color:var(--mut); font-size:11px;}
+
+@media (max-width: 980px){ 
+  .grid.grid-3{ grid-template-columns:1fr; }
+  .order-form{ flex-direction:column;}
+  .item-input, .price-input, .qty-input{ width:100%;}
+}
+
