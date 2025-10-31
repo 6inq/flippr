@@ -69,20 +69,34 @@ function generateId() {
 }
 
 // ---------- Tab Switching ----------
-document.querySelectorAll('.tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    const targetTab = tab.dataset.tab;
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-    tab.classList.add('active');
-    el(`tab-${targetTab}`).classList.add('active');
-    renderLists();
-    if (targetTab === 'items') renderItemTracking();
-    if (targetTab === 'stats') {
-      updateStats(); // Refresh stats when viewing stats tab
-    }
+function setupTabs() {
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const targetTab = tab.dataset.tab;
+      
+      // Remove active from all tabs and hide all content
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => {
+        c.classList.remove('active');
+        c.style.display = 'none'; // Force hide with inline style
+      });
+      
+      // Activate clicked tab and show its content
+      tab.classList.add('active');
+      const targetContent = el(`tab-${targetTab}`);
+      if (targetContent) {
+        targetContent.classList.add('active');
+        targetContent.style.display = 'block'; // Force show with inline style
+      }
+      
+      renderLists();
+      if (targetTab === 'items') renderItemTracking();
+      if (targetTab === 'stats') {
+        updateStats(); // Refresh stats when viewing stats tab
+      }
+    });
   });
-});
+}
 
 // ---------- Add Buy Order ----------
 el('addBuyOrder').addEventListener('click', () => {
@@ -1601,9 +1615,42 @@ async function getGELimit(itemName) {
 }
 
 // ---------- Initialize ----------
-loadData();
-loadSettings();
-loadGELimitsDB();
-renderLists();
-updateStats();
+function init() {
+  // Setup tab switching first
+  setupTabs();
+  
+  // Ensure only the active tab is visible on load
+  document.querySelectorAll('.tab-content').forEach(c => {
+    c.classList.remove('active');
+    c.style.display = 'none';
+  });
+  
+  // Show only the stats tab (default active)
+  const statsTab = el('tab-stats');
+  if (statsTab) {
+    statsTab.classList.add('active');
+    statsTab.style.display = 'block';
+  }
+  
+  // Ensure only the stats tab button is active
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  const statsTabBtn = document.querySelector('[data-tab="stats"]');
+  if (statsTabBtn) {
+    statsTabBtn.classList.add('active');
+  }
+  
+  loadData();
+  loadSettings();
+  loadGELimitsDB();
+  renderLists();
+  updateStats();
+}
+
+// Initialize when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  // DOM is already ready
+  init();
+}
 
