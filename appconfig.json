@@ -1,13 +1,16 @@
 {
-  "appName": "Flippr (Alt1)",
-  "appUrl": "./index.html",
-  "description": "Comprehensive GE flipping tracker with profit margins, tax calculations, historical data, and statistics. Track buy/sell orders, link transactions, and monitor your flipping performance.",
-  "appType": "html",
-  "category": "skilling",
-  "author": "Gingie",
-  "version": "1.3.0",
-  "permissions": ["capture", "ocr", "overlay", "chatbox"],
-  "configUrl": "./appconfig.json",
-  "iconUrl": "./icon.jpg"
+	"appName": "Flippr (Alt1)",
+	"description": "Comprehensive GE flipping tracker with profit margins, tax calculations, historical data, and statistics. Track buy/sell orders, link transactions, and monitor your flipping performance.",
+	"appUrl": "./index.html",
+	"configUrl": "./appconfig.json",
+	"iconUrl": "./icon.jpg",
+	"defaultWidth": 1200,
+	"defaultHeight": 900,
+	"minWidth": 700,
+	"minHeight": 500,
+	"maxWidth": 1600,
+	"maxHeight": 1400,
+	"requestHandlers": [],
+	"activators": [],
+	"permissions": "pixel,gamestate,overlay,chatbox"
 }
-
