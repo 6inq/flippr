@@ -8,6 +8,6 @@
   "version": "1.3.0",
   "permissions": ["capture", "ocr", "overlay", "chatbox"],
   "configUrl": "./appconfig.json",
-  "iconUrl": "./icon.png"
+  "iconUrl": "./icon.jpg"
 }
 
