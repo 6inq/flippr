@@ -70,9 +70,21 @@ function generateId() {
 
 // ---------- Tab Switching ----------
 function setupTabs() {
-  document.querySelectorAll('.tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      const targetTab = tab.dataset.tab;
+  const tabs = document.querySelectorAll('.tab');
+  console.log('Setting up tabs, found:', tabs.length);
+  
+  tabs.forEach(tab => {
+    tab.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const targetTab = this.dataset.tab;
+      console.log('Tab clicked:', targetTab);
+      
+      if (!targetTab) {
+        console.error('No data-tab attribute found on tab');
+        return;
+      }
       
       // Remove active from all tabs and hide all content
       document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -82,11 +94,15 @@ function setupTabs() {
       });
       
       // Activate clicked tab and show its content
-      tab.classList.add('active');
+      this.classList.add('active');
       const targetContent = el(`tab-${targetTab}`);
+      console.log('Target content element:', targetContent);
+      
       if (targetContent) {
         targetContent.classList.add('active');
         targetContent.style.display = 'block'; // Force show with inline style
+      } else {
+        console.error('Could not find tab-content element:', `tab-${targetTab}`);
       }
       
       renderLists();
@@ -1616,7 +1632,14 @@ async function getGELimit(itemName) {
 
 // ---------- Initialize ----------
 function init() {
-  // Setup tab switching first
+  console.log('Initializing Flippr...');
+  
+  // Load data first
+  loadData();
+  loadSettings();
+  loadGELimitsDB();
+  
+  // Setup tab switching - must be done before hiding tabs
   setupTabs();
   
   // Ensure only the active tab is visible on load
@@ -1630,6 +1653,9 @@ function init() {
   if (statsTab) {
     statsTab.classList.add('active');
     statsTab.style.display = 'block';
+    console.log('Stats tab shown');
+  } else {
+    console.error('Could not find tab-stats element');
   }
   
   // Ensure only the stats tab button is active
@@ -1637,13 +1663,14 @@ function init() {
   const statsTabBtn = document.querySelector('[data-tab="stats"]');
   if (statsTabBtn) {
     statsTabBtn.classList.add('active');
+    console.log('Stats tab button activated');
+  } else {
+    console.error('Could not find stats tab button');
   }
   
-  loadData();
-  loadSettings();
-  loadGELimitsDB();
   renderLists();
   updateStats();
+  console.log('Initialization complete');
 }
 
 // Initialize when DOM is ready
