@@ -2,7 +2,6 @@
 	"appName": "Flippr (Alt1)",
 	"description": "Comprehensive GE flipping tracker with profit margins, tax calculations, historical data, and statistics. Track buy/sell orders, link transactions, and monitor your flipping performance.",
 	"appUrl": "./index.html",
-	"configUrl": "./appconfig.json",
 	"iconUrl": "./icon.jpg",
 	"defaultWidth": 1200,
 	"defaultHeight": 900,
