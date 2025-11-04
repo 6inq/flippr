@@ -3,14 +3,15 @@
 	"description": "Comprehensive GE flipping tracker with profit margins, tax calculations, historical data, and statistics. Track buy/sell orders, link transactions, and monitor your flipping performance.",
 	"appUrl": "./index.html",
 	"configUrl": "./appconfig.json",
-	"iconUrl": "./icon.jpg",
+	"iconUrl": "./icon.png",
 	"defaultWidth": 1200,
 	"defaultHeight": 900,
 	"minWidth": 700,
 	"minHeight": 500,
 	"maxWidth": 1600,
 	"maxHeight": 1400,
-	"requestHandlers": [],
-	"activators": [],
+	"requestHandlers": [ ],
+	"activators": [	],
 	"permissions": "pixel,gamestate,overlay,chatbox"
+
 }
